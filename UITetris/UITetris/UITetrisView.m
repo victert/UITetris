@@ -1,11 +1,10 @@
-//
-//  UITetrisView.m
-//  UITetris
-//
-//  Created by Charles Magahern on 7/12/11.
-//  Copyright 2011 omegaHern. All rights reserved.
-//
-
+/*
+ * UITetrisView.m
+ *
+ * Author: Charles Magahern <charles@magahern.com>
+ * Date Created: 03/28/2012
+ */
+ 
 #import "UITetrisView.h"
 #import "UITetrisGame.h"
 
@@ -273,3 +272,4 @@
 
 
 @end
+

@@ -1,11 +1,10 @@
-//
-//  UITetrisAppDelegate.m
-//  UITetris
-//
-//  Created by Charles Magahern on 7/11/11.
-//  Copyright 2011 omegaHern. All rights reserved.
-//
-
+/*
+ * UITetrisAppDelegate.m
+ *
+ * Author: Charles Magahern <charles@magahern.com>
+ * Date Created: 03/28/2012
+ */
+ 
 #import "UITetrisAppDelegate.h"
 #import "UITetrisViewController.h"
 
@@ -66,3 +65,4 @@
 }
 
 @end
+

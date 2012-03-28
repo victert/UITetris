@@ -1,14 +1,11 @@
-//
-//  PLTetronimo.m
-//  UITetris
-//
-//  Created by Charles Magahern on 7/12/11.
-//  Copyright 2011 omegaHern. All rights reserved.
-//
-
+/*
+ * UITetronimo.m
+ *
+ * Author: Charles Magahern <charles@magahern.com>
+ * Date Created: 03/28/2012
+ */
+ 
 #import "UITetronimo.h"
-
-#define kDefaultTetrisBlockColor UITetrisBlockColorBlue
 
 static const unsigned iBlock[kTetronimoBlocksCount] = {
     0, 0, 0, 0,
@@ -285,3 +282,4 @@ void _checkAndInitializeImages(void)
 
 
 @end
+

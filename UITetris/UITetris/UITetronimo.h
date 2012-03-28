@@ -1,11 +1,10 @@
-//
-//  PLTetronimo.h
-//  UITetris
-//
-//  Created by Charles Magahern on 7/12/11.
-//  Copyright 2011 omegaHern. All rights reserved.
-//
-
+/*
+ * UITetronimo.h
+ *
+ * Author: Charles Magahern <charles@magahern.com>
+ * Date Created: 03/28/2012
+ */
+ 
 #import <Foundation/Foundation.h>
 
 #define kTetronimoBlocksRowCount 4
@@ -63,3 +62,4 @@ void _checkAndInitializeImages(void);
 - (void)rotateLeft;
 
 @end
+

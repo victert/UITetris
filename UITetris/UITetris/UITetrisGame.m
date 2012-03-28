@@ -1,11 +1,10 @@
-//
-//  UITetrisGame.m
-//  UITetris
-//
-//  Created by Charles Magahern on 7/12/11.
-//  Copyright 2011 omegaHern. All rights reserved.
-//
-
+/*
+ * UITetrisGame.m
+ *
+ * Author: Charles Magahern <charles@magahern.com>
+ * Date Created: 03/28/2012
+ */
+ 
 #import "UITetrisGame.h"
 
 #define kDefaultGameSpeed       1.0f
@@ -215,10 +214,10 @@ typedef enum {
 - (void)moveTetronimo:(UITetronimoActionDirection)direction
 {
     if (fallingTetronimo != nil) {
-        if (direction != PLTetronimoActionDown) {
-            fallingTetronimo.xPosition += (direction == PLTetronimoActionLeft ? -1 : 1);
+        if (direction != UITetronimoActionDown) {
+            fallingTetronimo.xPosition += (direction == UITetronimoActionLeft ? -1 : 1);
             if ([self _checkCollisionsOfType:UITetrisCollisionTypeBoth]) {
-                fallingTetronimo.xPosition += (direction == PLTetronimoActionLeft ? 1 : -1);
+                fallingTetronimo.xPosition += (direction == UITetronimoActionLeft ? 1 : -1);
             }
         } else {
             fallingTetronimo.yPosition++;
@@ -234,7 +233,7 @@ typedef enum {
 - (void)rotateTetronimo:(UITetronimoActionDirection)direction
 {
     if (fallingTetronimo != nil) {
-        if (direction == PLTetronimoActionLeft)
+        if (direction == UITetronimoActionLeft)
             [fallingTetronimo rotateLeft];
         else
             [fallingTetronimo rotateRight];
@@ -291,7 +290,7 @@ typedef enum {
         
         if (!shouldRotate) {
             // We shouldn't rotate here... Undo rotation.
-            if (direction == PLTetronimoActionLeft)
+            if (direction == UITetronimoActionLeft)
                 [fallingTetronimo rotateRight];
             else
                 [fallingTetronimo rotateLeft];
@@ -490,3 +489,4 @@ typedef enum {
 
 
 @end
+

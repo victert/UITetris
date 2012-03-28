@@ -1,11 +1,10 @@
-//
-//  UITetrisGame.h
-//  UITetris
-//
-//  Created by Charles Magahern on 7/12/11.
-//  Copyright 2011 omegaHern. All rights reserved.
-//
-
+/*
+ * UITetrisGame.h
+ *
+ * Author: Charles Magahern <charles@magahern.com>
+ * Date Created: 03/28/2012
+ */
+ 
 #import <Foundation/Foundation.h>
 #import "UITetronimo.h"
 
@@ -25,9 +24,9 @@
 @end
 
 typedef enum {
-    PLTetronimoActionLeft,
-    PLTetronimoActionRight,
-    PLTetronimoActionDown
+    UITetronimoActionLeft,
+    UITetronimoActionRight,
+    UITetronimoActionDown
 } UITetronimoActionDirection;
 
 
@@ -60,3 +59,4 @@ typedef enum {
 - (void)fillBoardWithTestBlocks;
 
 @end
+

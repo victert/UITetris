@@ -1,11 +1,10 @@
-//
-//  UITetrisViewController.m
-//  UITetris
-//
-//  Created by Charles Magahern on 7/11/11.
-//  Copyright 2011 omegaHern. All rights reserved.
-//
-
+/*
+ * UITetrisViewController.m
+ *
+ * Author: Charles Magahern <charles@magahern.com>
+ * Date Created: 03/28/2012
+ */
+ 
 #import "UITetrisViewController.h"
 #import "UITetrisView.h"
 #import "UITetronimo.h"
@@ -107,16 +106,16 @@
     
     if (fabsf(xDistanceMoved) >= kControllerMoveSensitivity) {
         if (xDistanceMoved < 0.0) {
-            [tetrisGame moveTetronimo:PLTetronimoActionLeft];
+            [tetrisGame moveTetronimo:UITetronimoActionLeft];
         } else if (xDistanceMoved > 0.0) {
-            [tetrisGame moveTetronimo:PLTetronimoActionRight];
+            [tetrisGame moveTetronimo:UITetronimoActionRight];
         }
         
         xDistanceMoved = 0.0;
     }
     
     if (yDistanceMoved >= kControllerMoveDownSensitivity) {
-        [tetrisGame moveTetronimo:PLTetronimoActionDown];
+        [tetrisGame moveTetronimo:UITetronimoActionDown];
         
         yDistanceMoved = 0.0;
     }
@@ -127,9 +126,9 @@
     if (_touchDistanceMoved <= kControllerRotateSensitivity) {
         CGPoint pt = [[touches anyObject] locationInView:self.view];
         if (pt.x <= self.view.bounds.size.width / 2.0) {
-            [tetrisGame rotateTetronimo:PLTetronimoActionLeft];
+            [tetrisGame rotateTetronimo:UITetronimoActionLeft];
         } else {
-            [tetrisGame rotateTetronimo:PLTetronimoActionRight];
+            [tetrisGame rotateTetronimo:UITetronimoActionRight];
         }
     }
 }
@@ -199,3 +198,4 @@
 
 
 @end
+
