@@ -1,27 +1,27 @@
 //
-//  PLTetrisGame.m
-//  PLTetris
+//  UITetrisGame.m
+//  UITetris
 //
 //  Created by Charles Magahern on 7/12/11.
 //  Copyright 2011 omegaHern. All rights reserved.
 //
 
-#import "PLTetrisGame.h"
+#import "UITetrisGame.h"
 
 #define kDefaultGameSpeed       1.0f
 #define kNoMansLand             -3
 
 typedef enum {
-    PLTetrisCollisionTypeBounds,
-    PLTetrisCollisionTypeBlocks,
-    PLTetrisCollisionTypeBoth
-} PLTetrisCollisionType;
+    UITetrisCollisionTypeBounds,
+    UITetrisCollisionTypeBlocks,
+    UITetrisCollisionTypeBoth
+} UITetrisCollisionType;
 
-@interface PLTetrisGame ()
+@interface UITetrisGame ()
 
 - (float)_getDeltaTime;
 - (void)_solidifyFallingTetronimo;
-- (BOOL)_checkCollisionsOfType:(PLTetrisCollisionType)type;
+- (BOOL)_checkCollisionsOfType:(UITetrisCollisionType)type;
 - (BOOL)_checkBlockCollisions;
 - (BOOL)_checkBounds;
 
@@ -34,14 +34,14 @@ typedef enum {
 - (BOOL)_verifyGameDelegateForSelector:(SEL)selector;
 - (void)_update;
 
-- (PLTetronimo *)_randomTetronimo;
+- (UITetronimo *)_randomTetronimo;
 - (NSArray *)_randomTetronimoSet;
-- (PLTetronimo *)_popTetronimo;
+- (UITetronimo *)_popTetronimo;
 - (void)_placeAndSetNextTetronimo;
 
 @end
 
-@implementation PLTetrisGame
+@implementation UITetrisGame
 @synthesize gameDelegate;
 @synthesize fallingTetronimo;
 @synthesize isRunning, gameSpeed, score;
@@ -49,7 +49,7 @@ typedef enum {
 - (id)init
 {
     if ((self = [super init])) {
-        _gameBoard = (PLTetrisBlock *) calloc(kTetrisBoardSize, sizeof(PLTetrisBlock));
+        _gameBoard = (UITetrisBlock *) calloc(kTetrisBoardSize, sizeof(UITetrisBlock));
         _nextTetronimos = [[NSMutableArray alloc] init];
         _gameTimer = nil;
         _lastFireDate = [[NSDate date] retain];
@@ -72,7 +72,7 @@ typedef enum {
         [fallingTetronimo release];
     
     for (unsigned i = 0; i < kTetrisBoardSize; i++)
-        PLTetrisBlockFree(_gameBoard[i]);
+        UITetrisBlockFree(_gameBoard[i]);
     free(_gameBoard);
     
     [_nextTetronimos release];
@@ -83,12 +83,12 @@ typedef enum {
 
 #pragma mark - Accessors
 
-- (PLTetrisBlock *)gameBoard
+- (UITetrisBlock *)gameBoard
 {
     return _gameBoard;
 }
 
-- (PLTetronimo *)nextTetronimo
+- (UITetronimo *)nextTetronimo
 {
     if ([_nextTetronimos count] == 0) 
         [_nextTetronimos addObjectsFromArray:[self _randomTetronimoSet]];
@@ -103,7 +103,7 @@ typedef enum {
 {
     if (fallingTetronimo == nil) return;
     
-    PLTetrisBlock *blocks = [fallingTetronimo blocks];
+    UITetrisBlock *blocks = [fallingTetronimo blocks];
     int row, col, idx;
     
     for (unsigned i = 0; i < kTetronimoBlocksCount; i++) {
@@ -112,7 +112,7 @@ typedef enum {
             col = fallingTetronimo.xPosition + i % kTetronimoBlocksColCount;
             idx = (row * kTetrisBoardColBlocksCount) + col;
             
-            _gameBoard[idx] = PLTetrisBlockCopy(blocks[i]);
+            _gameBoard[idx] = UITetrisBlockCopy(blocks[i]);
         }
     }
     
@@ -123,11 +123,11 @@ typedef enum {
 
 #pragma mark - Collision Detection
 
-- (BOOL)_checkCollisionsOfType:(PLTetrisCollisionType)type
+- (BOOL)_checkCollisionsOfType:(UITetrisCollisionType)type
 {
     if (fallingTetronimo == nil) return NO;
     
-    PLTetrisBlock *blocks = [fallingTetronimo blocks];
+    UITetrisBlock *blocks = [fallingTetronimo blocks];
     int row, col, idx;
     
     for (unsigned i = 0; i < kTetronimoBlocksCount; i++) {
@@ -136,13 +136,13 @@ typedef enum {
             col = fallingTetronimo.xPosition + i % kTetronimoBlocksColCount;
             idx = (row * kTetrisBoardColBlocksCount) + col;
             
-            if (type == PLTetrisCollisionTypeBounds || type == PLTetrisCollisionTypeBoth) {
+            if (type == UITetrisCollisionTypeBounds || type == UITetrisCollisionTypeBoth) {
                 if (row >= kTetrisBoardRowBlocksCount
                     || col >= kTetrisBoardColBlocksCount
                     || col < 0) return YES;
             }
             
-            if (type == PLTetrisCollisionTypeBlocks || type == PLTetrisCollisionTypeBoth) {
+            if (type == UITetrisCollisionTypeBlocks || type == UITetrisCollisionTypeBoth) {
                 if (idx >= 0 && idx < kTetrisBoardSize && _gameBoard[idx] != NULL) return YES;
             }
         }
@@ -153,12 +153,12 @@ typedef enum {
 
 - (BOOL)_checkBlockCollisions
 {
-    return [self _checkCollisionsOfType:PLTetrisCollisionTypeBlocks];
+    return [self _checkCollisionsOfType:UITetrisCollisionTypeBlocks];
 }
 
 - (BOOL)_checkBounds
 {
-    return [self _checkCollisionsOfType:PLTetrisCollisionTypeBounds];
+    return [self _checkCollisionsOfType:UITetrisCollisionTypeBounds];
 }
 
 
@@ -192,7 +192,7 @@ typedef enum {
     
     for (unsigned i = idx; i < idx + kTetrisBoardColBlocksCount && i < kTetrisBoardSize; i++) {
         if (_gameBoard[i] != NULL) {
-            PLTetrisBlockFree(_gameBoard[i]);
+            UITetrisBlockFree(_gameBoard[i]);
             _gameBoard[i] = NULL;
         }
     }
@@ -212,17 +212,17 @@ typedef enum {
 
 #pragma mark - Action Methods
 
-- (void)moveTetronimo:(PLTetronimoActionDirection)direction
+- (void)moveTetronimo:(UITetronimoActionDirection)direction
 {
     if (fallingTetronimo != nil) {
         if (direction != PLTetronimoActionDown) {
             fallingTetronimo.xPosition += (direction == PLTetronimoActionLeft ? -1 : 1);
-            if ([self _checkCollisionsOfType:PLTetrisCollisionTypeBoth]) {
+            if ([self _checkCollisionsOfType:UITetrisCollisionTypeBoth]) {
                 fallingTetronimo.xPosition += (direction == PLTetronimoActionLeft ? 1 : -1);
             }
         } else {
             fallingTetronimo.yPosition++;
-            if ([self _checkCollisionsOfType:PLTetrisCollisionTypeBoth]) {
+            if ([self _checkCollisionsOfType:UITetrisCollisionTypeBoth]) {
                 fallingTetronimo.yPosition--;
                 [self _solidifyFallingTetronimo];
                 [self _placeAndSetNextTetronimo];
@@ -231,7 +231,7 @@ typedef enum {
     }
 }
 
-- (void)rotateTetronimo:(PLTetronimoActionDirection)direction
+- (void)rotateTetronimo:(UITetronimoActionDirection)direction
 {
     if (fallingTetronimo != nil) {
         if (direction == PLTetronimoActionLeft)
@@ -301,7 +301,7 @@ typedef enum {
 
 - (void)dropTetronimo
 {
-    while (![self _checkCollisionsOfType:PLTetrisCollisionTypeBoth]) {
+    while (![self _checkCollisionsOfType:UITetrisCollisionTypeBoth]) {
         fallingTetronimo.yPosition++;
     }
     
@@ -326,7 +326,7 @@ typedef enum {
 {
     for (unsigned i = 0; i < kTetrisBoardSize; i++) {
         if (_gameBoard[i] != NULL) {
-            PLTetrisBlockFree(_gameBoard[i]);
+            UITetrisBlockFree(_gameBoard[i]);
             _gameBoard[i] = NULL;
         }
     }
@@ -376,7 +376,7 @@ typedef enum {
 - (BOOL)_verifyGameDelegateForSelector:(SEL)selector
 {
     return (self.gameDelegate != nil
-            && [self.gameDelegate conformsToProtocol:@protocol(PLTetrisGameDelegate)]
+            && [self.gameDelegate conformsToProtocol:@protocol(UITetrisGameDelegate)]
             && [self.gameDelegate respondsToSelector:selector]);
 }
 
@@ -389,7 +389,7 @@ typedef enum {
     if (_nextStepTimeElapsed >= 1.0 / gameSpeed && self.fallingTetronimo != nil) {
         self.fallingTetronimo.yPosition++;
         
-        if ([self _checkCollisionsOfType:PLTetrisCollisionTypeBoth]) {
+        if ([self _checkCollisionsOfType:UITetrisCollisionTypeBoth]) {
             self.fallingTetronimo.yPosition--;
             if (self.fallingTetronimo.yPosition <= kNoMansLand) {
                 [self _gameOver];
@@ -409,10 +409,10 @@ typedef enum {
 
 #pragma mark - Tetronimo Generation
 
-- (PLTetronimo *)_randomTetronimo
+- (UITetronimo *)_randomTetronimo
 {
     unsigned rand = arc4random() % 6;
-    PLTetronimo *tetronimo = [[PLTetronimo alloc] initWithType:rand];
+    UITetronimo *tetronimo = [[UITetronimo alloc] initWithType:rand];
     
     return [tetronimo autorelease];
 }
@@ -437,7 +437,7 @@ typedef enum {
     }
     
     for (unsigned i = 0; i < 7; i++) {
-        PLTetronimo *tet = [[PLTetronimo alloc] initWithType:types[i]];
+        UITetronimo *tet = [[UITetronimo alloc] initWithType:types[i]];
         [result addObject:tet];
         [tet release];
     }
@@ -445,7 +445,7 @@ typedef enum {
     return [result autorelease];
 }
 
-- (PLTetronimo *)_popTetronimo
+- (UITetronimo *)_popTetronimo
 {
     if (_nextTetronimos == nil) return nil;
     
@@ -454,7 +454,7 @@ typedef enum {
         [_nextTetronimos addObjectsFromArray:tets];
     }
     
-    PLTetronimo *result = [[_nextTetronimos lastObject] retain];
+    UITetronimo *result = [[_nextTetronimos lastObject] retain];
     [_nextTetronimos removeLastObject];
     
     return [result autorelease];
@@ -462,7 +462,7 @@ typedef enum {
 
 - (void)_placeAndSetNextTetronimo
 {
-    PLTetronimo *tet = [self _popTetronimo];
+    UITetronimo *tet = [self _popTetronimo];
     tet.xPosition = kTetrisBoardColBlocksCount / 3;
     tet.yPosition = -2;
     
@@ -482,7 +482,7 @@ typedef enum {
 {
     for (unsigned i = 10 * kTetrisBoardColBlocksCount; i < kTetrisBoardSize; i++) {
         if ((i + 1) % kTetrisBoardColBlocksCount != 0)
-            _gameBoard[i] = PLTetrisBlockCreate(PLTetrisBlockColorRed);
+            _gameBoard[i] = UITetrisBlockCreate(UITetrisBlockColorRed);
     }
     
     [self.gameDelegate tetrisBoardDidChange];

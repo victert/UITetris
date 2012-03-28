@@ -1,28 +1,28 @@
 //
-//  PLTetrisView.m
-//  PLTetris
+//  UITetrisView.m
+//  UITetris
 //
 //  Created by Charles Magahern on 7/12/11.
 //  Copyright 2011 omegaHern. All rights reserved.
 //
 
-#import "PLTetrisView.h"
-#import "PLTetrisGame.h"
+#import "UITetrisView.h"
+#import "UITetrisGame.h"
 
 #define kDefaultBlockSize 15.0
 #define kNextTetronimoBlockTag 1337
 
 
-@interface PLTetrisView ()
+@interface UITetrisView ()
 
-- (void)_drawBlock:(PLTetrisBlock)block atXPosition:(int)xPos yPosition:(int)yPos;
-- (void)_drawBlock:(PLTetrisBlock)block atBoardPosition:(int)position;
+- (void)_drawBlock:(UITetrisBlock)block atXPosition:(int)xPos yPosition:(int)yPos;
+- (void)_drawBlock:(UITetrisBlock)block atBoardPosition:(int)position;
 - (void)_drawBlocks;
 - (void)_drawFallingTetronimo;
 
 @end
 
-@implementation PLTetrisView
+@implementation UITetrisView
 @synthesize game;
 @synthesize blockSize;
 @synthesize boardIsDirty;
@@ -117,11 +117,11 @@
 
 #pragma mark - Displaying Game State
 
-- (void)updateNextTetronimoDisplay:(PLTetronimo *)tetronimo
+- (void)updateNextTetronimoDisplay:(UITetronimo *)tetronimo
 {
     if (!_nextTetronimoView || !_nextTetronimoContentView) return;
     
-    PLTetrisBlock *blocks = [tetronimo blocks];
+    UITetrisBlock *blocks = [tetronimo blocks];
     
     [UIView animateWithDuration:0.1 animations:^(void) {
         _nextTetronimoContentView.transform = CGAffineTransformMakeTranslation(0.0, -_nextTetronimoContentView.bounds.size.height);
@@ -137,11 +137,11 @@
             CGFloat tetWidth, tetHeight, blkXOffset, blkYOffset;
             CGPoint nextTetOrigin;
             
-            tetWidth    = blockSize * (tetronimo.type == PLTetronimoTypeI ? 4 : 3);
-            tetHeight   = blockSize * (tetronimo.type == PLTetronimoTypeI ? 1 : 2);
+            tetWidth    = blockSize * (tetronimo.type == UITetronimoTypeI ? 4 : 3);
+            tetHeight   = blockSize * (tetronimo.type == UITetronimoTypeI ? 1 : 2);
             nextTetOrigin = CGPointMake(_nextTetronimoView.bounds.size.width / 2.0 - tetWidth / 2.0,
                                                 _nextTetronimoView.bounds.size.height / 2.0 - tetHeight / 2.0);
-            blkXOffset = (tetronimo.type == PLTetronimoTypeI ? 0.0 : (tetronimo.type == PLTetronimoTypeO ? -0.5 : -1.0));
+            blkXOffset = (tetronimo.type == UITetronimoTypeI ? 0.0 : (tetronimo.type == UITetronimoTypeO ? -0.5 : -1.0));
             blkYOffset = -1.0;
             for (unsigned i = 0; i < kTetronimoBlocksCount; i++) {
                 if (blocks[i] != NULL) {
@@ -201,7 +201,7 @@
 
 #pragma mark - "Drawing" Methods
 
-- (void)_drawBlock:(PLTetrisBlock)block atXPosition:(int)xPos yPosition:(int)yPos
+- (void)_drawBlock:(UITetrisBlock)block atXPosition:(int)xPos yPosition:(int)yPos
 {
     if (block == NULL) return;
     
@@ -223,7 +223,7 @@
     }
 }
 
-- (void)_drawBlock:(PLTetrisBlock)block atBoardPosition:(int)position
+- (void)_drawBlock:(UITetrisBlock)block atBoardPosition:(int)position
 {
     int xPos, yPos;
     xPos = position % kTetrisBoardColBlocksCount;
@@ -234,7 +234,7 @@
 
 - (void)_drawBlocks
 {
-    PLTetrisBlock *blocks = [game gameBoard];
+    UITetrisBlock *blocks = [game gameBoard];
     
     for (unsigned i = 0; i < kTetrisBoardSize; i++) {
         if (blocks[i] != NULL)
@@ -246,8 +246,8 @@
 
 - (void)_drawFallingTetronimo
 {
-    PLTetronimo *tet = [game fallingTetronimo];
-    PLTetrisBlock *tetblocks = [tet blocks];
+    UITetronimo *tet = [game fallingTetronimo];
+    UITetrisBlock *tetblocks = [tet blocks];
     int xPos, yPos;
     
     if (tet == nil)

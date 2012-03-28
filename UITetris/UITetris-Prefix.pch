@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'PLTetris' target in the 'PLTetris' project
+// Prefix header for all source files of the 'UITetris' target in the 'UITetris' project
 //
 
 #import <Availability.h>

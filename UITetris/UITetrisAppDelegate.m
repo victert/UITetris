@@ -1,15 +1,15 @@
 //
-//  PLTetrisAppDelegate.m
-//  PLTetris
+//  UITetrisAppDelegate.m
+//  UITetris
 //
 //  Created by Charles Magahern on 7/11/11.
 //  Copyright 2011 omegaHern. All rights reserved.
 //
 
-#import "PLTetrisAppDelegate.h"
+#import "UITetrisAppDelegate.h"
 #import "UITetrisViewController.h"
 
-@implementation PLTetrisAppDelegate
+@implementation UITetrisAppDelegate
 @synthesize window = _window;
 @synthesize tetrisViewController = _tetrisViewController;
 

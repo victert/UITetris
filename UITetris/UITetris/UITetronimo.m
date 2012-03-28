@@ -1,14 +1,14 @@
 //
 //  PLTetronimo.m
-//  PLTetris
+//  UITetris
 //
 //  Created by Charles Magahern on 7/12/11.
 //  Copyright 2011 omegaHern. All rights reserved.
 //
 
-#import "PLTetronimo.h"
+#import "UITetronimo.h"
 
-#define kDefaultTetrisBlockColor PLTetrisBlockColorBlue
+#define kDefaultTetrisBlockColor UITetrisBlockColorBlue
 
 static const unsigned iBlock[kTetronimoBlocksCount] = {
     0, 0, 0, 0,
@@ -68,34 +68,34 @@ static UIImage *orangeBlockImg  = nil;
 static UIImage *blueBlockImg    = nil;
 
 
-PLTetrisBlock PLTetrisBlockCreate(PLTetrisBlockColor col)
+UITetrisBlock UITetrisBlockCreate(UITetrisBlockColor col)
 {
-    PLTetrisBlock blk = (PLTetrisBlock) malloc(sizeof(struct tetris_block_t));
+    UITetrisBlock blk = (UITetrisBlock) malloc(sizeof(struct tetris_block_t));
     blk->color = col;
     
     _checkAndInitializeImages();
     
     UIImage *image = nil;
     switch (col) {
-        case PLTetrisBlockColorTeal:
+        case UITetrisBlockColorTeal:
             image = tealBlockImg;
             break;
-        case PLTetrisBlockColorBlue:
+        case UITetrisBlockColorBlue:
             image = blueBlockImg;
             break;
-        case PLTetrisBlockColorOrange:
+        case UITetrisBlockColorOrange:
             image = orangeBlockImg;
             break;
-        case PLTetrisBlockColorYellow:
+        case UITetrisBlockColorYellow:
             image = yellowBlockImg;
             break;
-        case PLTetrisBlockColorGreen:
+        case UITetrisBlockColorGreen:
             image = greenBlockImg;
             break;
-        case PLTetrisBlockColorPurple:
+        case UITetrisBlockColorPurple:
             image = purpleBlockImg;
             break;
-        case PLTetrisBlockColorRed:
+        case UITetrisBlockColorRed:
             image = redBlockImg;
             break;
         default:
@@ -107,16 +107,16 @@ PLTetrisBlock PLTetrisBlockCreate(PLTetrisBlockColor col)
     return blk;
 }
 
-PLTetrisBlock PLTetrisBlockCopy(PLTetrisBlock blk)
+UITetrisBlock UITetrisBlockCopy(UITetrisBlock blk)
 {
-    PLTetrisBlock new_blk = (PLTetrisBlock) malloc(sizeof(struct tetris_block_t));
+    UITetrisBlock new_blk = (UITetrisBlock) malloc(sizeof(struct tetris_block_t));
     new_blk->color = blk->color;
     new_blk->imageView = [blk->imageView retain];
 
     return new_blk;
 }
 
-void PLTetrisBlockFree(PLTetrisBlock blk)
+void UITetrisBlockFree(UITetrisBlock blk)
 {
     if (blk != NULL) {
         [blk->imageView removeFromSuperview];
@@ -148,14 +148,14 @@ void _checkAndInitializeImages(void)
 }
 
 
-@implementation PLTetronimo
+@implementation UITetronimo
 @synthesize type;
 @synthesize xPosition, yPosition;
 
 - (id)init
 {
     if ((self = [super init])) {
-        _blocks = (PLTetrisBlock *) malloc(kTetronimoBlocksCount * sizeof(struct tetris_block_t));
+        _blocks = (UITetrisBlock *) malloc(kTetronimoBlocksCount * sizeof(struct tetris_block_t));
         
         type = 0;
         xPosition = yPosition = 0;
@@ -164,51 +164,51 @@ void _checkAndInitializeImages(void)
     return self;
 }
 
-- (id)initWithType:(PLTetronimoType)t
+- (id)initWithType:(UITetronimoType)t
 {
     if ((self = [self init])) {
         unsigned *blks;
-        PLTetrisBlockColor color;
+        UITetrisBlockColor color;
         
         switch (t) {
-            case PLTetronimoTypeI:
+            case UITetronimoTypeI:
                 blks = (unsigned *) iBlock;
-                color = PLTetrisBlockColorTeal;
+                color = UITetrisBlockColorTeal;
                 break;
-            case PLTetronimoTypeJ:
+            case UITetronimoTypeJ:
                 blks = (unsigned *) jBlock;
-                color = PLTetrisBlockColorBlue;
+                color = UITetrisBlockColorBlue;
                 break;
-            case PLTetronimoTypeL:
+            case UITetronimoTypeL:
                 blks = (unsigned *) lBlock;
-                color = PLTetrisBlockColorOrange;
+                color = UITetrisBlockColorOrange;
                 break;
-            case PLTetronimoTypeO:
+            case UITetronimoTypeO:
                 blks = (unsigned *) oBlock;
-                color = PLTetrisBlockColorYellow;
+                color = UITetrisBlockColorYellow;
                 break;
-            case PLTetronimoTypeS:
+            case UITetronimoTypeS:
                 blks = (unsigned *) sBlock;
-                color = PLTetrisBlockColorGreen;
+                color = UITetrisBlockColorGreen;
                 break;
-            case PLTetronimoTypeT:
+            case UITetronimoTypeT:
                 blks = (unsigned *) tBlock;
-                color = PLTetrisBlockColorPurple;
+                color = UITetrisBlockColorPurple;
                 break;
-            case PLTetronimoTypeZ:
+            case UITetronimoTypeZ:
                 blks = (unsigned *) zBlock;
-                color = PLTetrisBlockColorRed;
+                color = UITetrisBlockColorRed;
                 break;
             default:
                 blks = (unsigned *) tBlock;
-                color = PLTetrisBlockColorPurple;
+                color = UITetrisBlockColorPurple;
                 break;
         }
         
         self.type = t;
         
         for (unsigned i = 0; i < kTetronimoBlocksCount; i++) {
-            _blocks[i] = (blks[i] ? PLTetrisBlockCreate(color) : NULL);
+            _blocks[i] = (blks[i] ? UITetrisBlockCreate(color) : NULL);
         }
     }
     
@@ -218,7 +218,7 @@ void _checkAndInitializeImages(void)
 - (void)dealloc
 {
     for (unsigned i = 0; i < kTetronimoBlocksCount; i++)
-        PLTetrisBlockFree(_blocks[i]);
+        UITetrisBlockFree(_blocks[i]);
     free(_blocks);
     
     [super dealloc];
@@ -227,7 +227,7 @@ void _checkAndInitializeImages(void)
 
 #pragma mark - Accessors
 
-- (PLTetrisBlock *)blocks
+- (UITetrisBlock *)blocks
 {
     return _blocks;
 }
@@ -237,7 +237,7 @@ void _checkAndInitializeImages(void)
 
 - (void)rotateRight
 {
-    PLTetrisBlock blks[kTetronimoBlocksCount];
+    UITetrisBlock blks[kTetronimoBlocksCount];
     for (unsigned i = 0; i < kTetronimoBlocksCount; i++) {
         unsigned row, col;
         row = (kTetronimoBlocksRowCount - 1) - (i % kTetronimoBlocksColCount);
@@ -252,7 +252,7 @@ void _checkAndInitializeImages(void)
 
 - (void)rotateLeft
 {
-    PLTetrisBlock blks[kTetronimoBlocksCount];
+    UITetrisBlock blks[kTetronimoBlocksCount];
     for (unsigned i = 0; i < kTetronimoBlocksCount; i++) {
         unsigned row, col;
         row = i % kTetronimoBlocksColCount;

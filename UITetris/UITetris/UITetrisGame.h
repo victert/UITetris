@@ -1,23 +1,23 @@
 //
-//  PLTetrisGame.h
-//  PLTetris
+//  UITetrisGame.h
+//  UITetris
 //
 //  Created by Charles Magahern on 7/12/11.
 //  Copyright 2011 omegaHern. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "PLTetronimo.h"
+#import "UITetronimo.h"
 
 #define kTetrisBoardRowBlocksCount 20
 #define kTetrisBoardColBlocksCount 10
 #define kTetrisBoardSize kTetrisBoardRowBlocksCount * kTetrisBoardColBlocksCount
 
-@protocol PLTetrisGameDelegate <NSObject>
+@protocol UITetrisGameDelegate <NSObject>
 
 - (void)tetrisGameDidUpdate:(float)dt;
 - (void)tetrisBoardDidChange;
-- (void)shouldDisplayNextTetronimo:(PLTetronimo *)tetronimo;
+- (void)shouldDisplayNextTetronimo:(UITetronimo *)tetronimo;
 - (void)shouldUpdateScore:(NSUInteger)score;
 - (void)clearedLinesAtRows:(NSUInteger[])rows count:(NSUInteger)count;
 - (void)gameOver;
@@ -28,32 +28,32 @@ typedef enum {
     PLTetronimoActionLeft,
     PLTetronimoActionRight,
     PLTetronimoActionDown
-} PLTetronimoActionDirection;
+} UITetronimoActionDirection;
 
 
-@interface PLTetrisGame : NSObject {
+@interface UITetrisGame : NSObject {
 @private
-    PLTetrisBlock *_gameBoard;
+    UITetrisBlock *_gameBoard;
     NSMutableArray *_nextTetronimos;
     NSTimer *_gameTimer;
     NSDate *_lastFireDate;
     NSTimeInterval _nextStepTimeElapsed;
 }
 
-@property (nonatomic, retain)   id<PLTetrisGameDelegate> gameDelegate;
-@property (nonatomic, retain)   PLTetronimo *fallingTetronimo;
+@property (nonatomic, retain)   id<UITetrisGameDelegate> gameDelegate;
+@property (nonatomic, retain)   UITetronimo *fallingTetronimo;
 @property (nonatomic, readonly) BOOL isRunning;
 @property (nonatomic, assign)   float gameSpeed;
 @property (nonatomic, assign)   NSUInteger score;
 
-- (PLTetrisBlock *)gameBoard;
-- (PLTetronimo *)nextTetronimo;
+- (UITetrisBlock *)gameBoard;
+- (UITetronimo *)nextTetronimo;
 
 - (void)startGame;
 - (void)pauseGame;
 
-- (void)moveTetronimo:(PLTetronimoActionDirection)direction;
-- (void)rotateTetronimo:(PLTetronimoActionDirection)direction;
+- (void)moveTetronimo:(UITetronimoActionDirection)direction;
+- (void)rotateTetronimo:(UITetronimoActionDirection)direction;
 - (void)dropTetronimo;
 
 // Debug

@@ -1,14 +1,14 @@
 //
-//  PLTetrisViewController.m
-//  PLTetris
+//  UITetrisViewController.m
+//  UITetris
 //
 //  Created by Charles Magahern on 7/11/11.
 //  Copyright 2011 omegaHern. All rights reserved.
 //
 
 #import "UITetrisViewController.h"
-#import "PLTetrisView.h"
-#import "PLTetronimo.h"
+#import "UITetrisView.h"
+#import "UITetronimo.h"
 
 #define kControllerMoveSensitivity      22.0f
 #define kControllerRotateSensitivity    5.0f
@@ -28,7 +28,7 @@
 {
     if ((self = [super init])) {
         // Setup Game
-        tetrisGame = [[PLTetrisGame alloc] init];
+        tetrisGame = [[UITetrisGame alloc] init];
         [tetrisGame setGameDelegate:self];
         [tetrisGame setGameSpeed:3.5];
         [tetrisGame startGame];
@@ -36,7 +36,7 @@
         
         // Setup View
         CGRect windowBounds = [[UIScreen mainScreen] bounds];
-        PLTetrisView *tetrisView = [[PLTetrisView alloc] initWithFrame:CGRectMake(0.0, 0.0, windowBounds.size.width, windowBounds.size.height)];
+        UITetrisView *tetrisView = [[UITetrisView alloc] initWithFrame:CGRectMake(0.0, 0.0, windowBounds.size.width, windowBounds.size.height)];
         tetrisView.game = tetrisGame;
         self.view = tetrisView;
         [tetrisView release];
@@ -153,31 +153,31 @@
 - (void)tetrisGameDidUpdate:(float)dt
 {
     if (self.isViewLoaded)
-        [(PLTetrisView *) self.view redraw];
+        [(UITetrisView *) self.view redraw];
 }
 
-- (void)shouldDisplayNextTetronimo:(PLTetronimo *)tetronimo
+- (void)shouldDisplayNextTetronimo:(UITetronimo *)tetronimo
 {
     if (self.isViewLoaded)
-        [(PLTetrisView *) self.view updateNextTetronimoDisplay:tetronimo];
+        [(UITetrisView *) self.view updateNextTetronimoDisplay:tetronimo];
 }
 
 - (void)tetrisBoardDidChange
 {
     if (self.isViewLoaded)
-        [(PLTetrisView *) self.view setBoardIsDirty:YES];
+        [(UITetrisView *) self.view setBoardIsDirty:YES];
 }
 
 - (void)shouldUpdateScore:(NSUInteger)score
 {
     if (self.isViewLoaded)
-        [(PLTetrisView *) self.view setScore:score];
+        [(UITetrisView *) self.view setScore:score];
 }
 
 - (void)clearedLinesAtRows:(NSUInteger[])rows count:(NSUInteger)count
 {
     if (self.isViewLoaded)
-        [(PLTetrisView *) self.view animateClearLinesAtRows:rows count:count];
+        [(UITetrisView *) self.view animateClearLinesAtRows:rows count:count];
 }
 
 - (void)gameOver
@@ -193,7 +193,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [(PLTetrisView *) self.view setScore:0];
+    [(UITetrisView *) self.view setScore:0];
     [tetrisGame startGame];
 }
 
